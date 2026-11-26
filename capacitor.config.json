@@ -1,0 +1,9 @@
+{
+  "appId": "uz.rubik.kubiklari",
+  "appName": "Rubik kubiklari",
+  "webDir": "www",
+  "backgroundColor": "#10131f",
+  "android": {
+    "adjustMarginsForEdgeToEdge": "auto"
+  }
+}

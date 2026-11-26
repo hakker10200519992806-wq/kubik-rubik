@@ -1,0 +1,22 @@
+[
+ {"title":"Oq xoch","goal":"Tepa yuzada oq xoch hosil qilish.","done_when":"4 ta oq qirra tepada, har birining yon rangi o'z markaziga mos.",
+  "algs":[{"name":"Qirrani 180° burish","moves":"F2","when":"Oq qirra pastda (sariq tomonda), yon rangi turgan markaz ustida bo'lsa.","verified":false,"touches":["F"]}]},
+ {"title":"Oq burchaklar","goal":"Oq burchaklarni tepa qatlamga to'g'ri joylash.","done_when":"Tepa qatlam to'liq oq, yon tomonlar markazlarga mos.",
+  "algs":[
+   {"name":"O'ng burchakni tushirish","moves":"R U R' U'","when":"Oq burchak tepa-o'ngda turib, uni o'z joyiga tushirish kerak (kerak bo'lsa 1–5 marta takrorlang).","verified":false,"touches":["U","DFR","FR"]},
+   {"name":"Chap burchakni tushirish","moves":"L' U' L U","when":"Oq burchak tepa-chapda turib, uni o'z joyiga tushirish kerak.","verified":false,"touches":["U","DLF","FL"]}]},
+ {"title":"2-qatlam","goal":"O'rta qatlam qirralarini joyiga qo'yish.","done_when":"Birinchi ikki qatlam to'liq yechilgan.",
+  "algs":[
+   {"name":"Qirrani o'ngga qo'yish","moves":"U R U' R' U' F' U F","when":"Tepadagi qirra old markaz rangida bo'lib, o'ngga ketishi kerak.","verified":false,"touches":["U","FR"]},
+   {"name":"Qirrani chapga qo'yish","moves":"U' L' U L U F U' F'","when":"Tepadagi qirra old markaz rangida bo'lib, chapga ketishi kerak.","verified":false,"touches":["U","FL"]}]},
+ {"title":"Sariq xoch","goal":"Tepada (sariq) xoch hosil qilish.","done_when":"Tepa yuzada 4 ta qirra sariq, pastki ikki qatlam buzilmagan.",
+  "algs":[
+   {"name":"Xoch formulasi 1","moves":"F R U R' U' F'","when":"Tepada nuqta, 'L' shakli yoki chiziq bor (chiziqni gorizontal, 'L' ni tepa-chapga qo'ying).","verified":false,"touches":["U"]},
+   {"name":"Xoch formulasi 2","moves":"F U R U' R' F'","when":"Tepada chiziq bor bo'lsa muqobil formula.","verified":false,"touches":["U"]}]},
+ {"title":"Sariq qirralarni joylash","goal":"Sariq qirralarni yon markazlarga moslash.","done_when":"Tepa qirralarning yon ranglari markazlariga mos.",
+  "algs":[{"name":"Ikki qirrani almashtirish (Sune + U)","moves":"R U R' U R U2 R' U","when":"Tepa qirralarning faqat ikkitasi to'g'ri joyida bo'lganda.","verified":false,"touches":["U"]}]},
+ {"title":"Burchaklar joyi","goal":"Tepa burchaklarni to'g'ri joyga olib kelish (yo'nalishidan qat'i nazar).","done_when":"Har tepa burchak o'z uch markaziga mos joyda.",
+  "algs":[{"name":"3 burchak siklini aylantirish","moves":"U R U' L' U R' U' L","when":"Kamida bitta burchak to'g'ri joyda turibdi; uni tepa-o'ngda ushlang.","verified":false,"touches":["UFL","ULB","UBR","URF"]}]},
+ {"title":"Burchaklar yo'nalishi","goal":"Tepa burchaklarni to'g'ri yo'nalishga burish.","done_when":"Hamma narsa yechilgan.",
+  "algs":[{"name":"Burchakni burish","moves":"R' D' R D","when":"Burilishi kerak burchak tepa-o'ngda; sariq stiker tepaga chiqquncha 2 yoki 4 marta takrorlang. Faqat tugatgach tepani buring.","verified":false,"touches":["R","D"]}]}
+]

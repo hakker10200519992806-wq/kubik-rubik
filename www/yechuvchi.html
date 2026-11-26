@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src data:; base-uri 'none'; form-action 'none'">
+<title>Kubik yechuvchi</title>
+<style>
+:root{--bg:#10131f;--fg:#eef1fb;--mut:#b9c1e0;--card:rgba(255,255,255,.09);--bd:rgba(255,255,255,.22);--pri:#4c6fff;color-scheme:dark;--c:24px}
+@media(prefers-color-scheme:light){:root:not([data-theme]){--bg:#e6eaf7;--fg:#1a2036;--mut:#4b5578;--card:rgba(20,30,70,.07);--bd:rgba(20,30,70,.25);color-scheme:light}}
+:root[data-theme="light"]{--bg:#e6eaf7;--fg:#1a2036;--mut:#4b5578;--card:rgba(20,30,70,.07);--bd:rgba(20,30,70,.25);color-scheme:light}
+:root[data-theme="dark"]{--bg:#10131f;--fg:#eef1fb;--mut:#b9c1e0;--card:rgba(255,255,255,.09);--bd:rgba(255,255,255,.22);--pri:#4c6fff;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top,0) 12px calc(20px + env(safe-area-inset-bottom,0));-webkit-user-select:none;user-select:none}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:10px 0}
+h1{margin:0;font-size:18px}
+main{max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:12px}
+a.bk{color:var(--mut);text-decoration:none;border:1px solid var(--bd);border-radius:10px;padding:9px 12px;font-size:14px}
+button,select{font:inherit;font-size:14px;height:40px;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:0 14px;cursor:pointer}
+button.p{background:var(--pri);border-color:#6d8aff;color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}
+select option{background:#1b2036;color:#eef1fb}
+.row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+.net{display:grid;grid-template-columns:repeat(12,var(--c));grid-template-rows:repeat(9,var(--c));gap:2px;touch-action:none;padding:8px;background:var(--card);border-radius:12px}
+.net.sm{--c:clamp(11px,3.6vw,18px);gap:1px;padding:6px}
+.st{border-radius:4px;border:1px solid rgba(0,0,0,.4);background:#7a7f93;position:relative}
+.st.lock::after{content:"";position:absolute;inset:36%;border-radius:50%;background:rgba(0,0,0,.35)}
+.st.bad{outline:3px solid #ff2d2d;outline-offset:-1px;z-index:2}
+#pal button{width:46px;height:46px;border-radius:12px;border:3px solid transparent;padding:0}
+#pal button.on{border-color:var(--pri);box-shadow:0 0 0 2px var(--fg)}
+#msg,#out{width:100%;font-size:14px;line-height:1.5}
+.err{background:rgba(255,45,45,.14);border:1px solid #ff2d2d;border-radius:10px;padding:8px 12px;margin:6px 0}
+.ok{background:rgba(47,191,113,.16);border:1px solid #2fbf71;border-radius:10px;padding:8px 12px;margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}
+.chip{padding:4px 8px;border-radius:8px;background:var(--card);border:1px solid var(--bd);font-weight:600;font-variant-numeric:tabular-nums}
+.chip.cur{background:var(--pri);color:#fff}
+small{color:var(--mut)}
+.guide{width:100%;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:8px 14px}
+.guide summary{cursor:pointer;font-weight:650;padding:6px 0}
+.guide h3{font-size:15px;margin:14px 0 4px}
+.guide p{margin:6px 0;font-size:14px;line-height:1.5}
+.nt{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:start;margin:8px 0;font-size:14px;line-height:1.45}
+.nt b{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:2px 8px;text-align:center;white-space:nowrap}
+#hold{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center}
+#hold svg{width:min(240px,70vw);height:auto}
+.st.hl{outline:3px solid #ffcc33;outline-offset:-1px;z-index:2}
+.net.dim .st:not(.hl){opacity:.4}
+.pv{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center}
+.dg{display:flex;flex-direction:column;align-items:center;gap:4px}
+.alg{border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin:8px 0}
+.bd{font-size:12px;border-radius:999px;padding:2px 8px;margin-left:6px;white-space:normal}
+.bd.g{background:rgba(47,191,113,.2);border:1px solid #2fbf71}.bd.r{background:rgba(255,45,45,.18);border:1px solid #ff2d2d}.bd.y{background:rgba(255,204,51,.2);border:1px solid #ffcc33}
+.dgs{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+figure.mf{margin:0;text-align:center;font-size:12px}
+.guide details.st2{border-top:1px solid var(--bd);padding:6px 0}
+.guide details.st2>summary{font-weight:600}
+
+/* ---- Telefon: katta bosish maydonlari ---- */
+html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button,select,input{height:44px;min-width:44px}
+input{font:inherit;font-size:14px;flex:1 1 200px;min-width:0;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:0 12px;-webkit-user-select:text;user-select:text}
+select option{background:var(--bg);color:var(--fg)}
+button[aria-pressed=true]{background:var(--pri);border-color:#6d8aff;color:#fff}
+#pal button{width:52px;height:52px}
+.netwrap{width:100%;overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:2px}
+.net{width:max-content;margin:0 auto}
+.pt{display:none}
+.stp{min-width:56px;text-align:center}
+/* ---- Chop etish: toza ko'rinish (faqat yoyilma va yechim, oq-qora uchun stiker harflari bilan) ---- */
+@media print{
+ :root,:root[data-theme]{--bg:#fff;--fg:#000;--mut:#333;--card:#fff;--bd:#888;color-scheme:light}
+ body{background:#fff;color:#000;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ header,.guide,#pal,#msg,.noprint{display:none!important}
+ .pt{display:block;text-align:center;font-size:16pt;margin:0 0 6mm}
+ .netwrap{overflow:visible}
+ .net{--c:calc(170mm / (var(--n) * 4))!important;background:none;padding:0;gap:.4mm;break-inside:avoid}
+ .net.sm{--c:calc(70mm / (var(--n) * 4))!important}
+ .st{border:.3pt solid #000;border-radius:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .st::after,.st.lock::after{content:attr(data-l);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:none;border-radius:0;font:700 calc(var(--c) * .5)/1 system-ui,sans-serif;color:#000;text-shadow:0 0 2px #fff}
+ .st.hl{outline:1.2pt solid #000}
+ .chip,.chip.cur{background:#fff;color:#000;border:.5pt solid #000}
+ .ok,.err{background:none;border:0;padding:0}
+ #out{break-inside:avoid}
+}
+
+/* ---- Kamera skaneri ---- */
+#scan{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#000;color:var(--fg)}
+#scan[hidden]{display:none}
+#scBox{position:relative;flex:1 1 42%;min-height:180px;background:#000;overflow:hidden}
+#scV{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#scC{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#scClose{position:absolute;top:calc(8px + env(safe-area-inset-top,0));right:8px;background:rgba(0,0,0,.55);color:#fff;border-color:rgba(255,255,255,.4)}
+#scMsg{position:absolute;left:8px;right:8px;bottom:8px;display:none;padding:8px 12px;border-radius:10px;color:#fff;font-size:14px;line-height:1.4}
+#scPanel{flex:0 1 auto;max-height:56%;overflow-y:auto;background:var(--bg);padding:8px 10px calc(10px + env(safe-area-inset-bottom,0));display:flex;flex-direction:column;gap:6px;align-items:center}
+#scHint{font-size:14px;line-height:1.4;text-align:center}
+#scProg{margin:0;justify-content:center}
+#scPanel .netwrap{overflow:visible}
+@media print{#scan{display:none!important}}
+</style>
+</head>
+<body>
+<header class="noprint"><a class="bk" href="index.html">‹ Simulyator</a><h1>Kubik yechuvchi</h1>
+<select id="sel" aria-label="Kubik o'lchami"></select>
+<button id="bCam" title="Kamera bilan kubikni skanerlash">📷 Kamera</button><button id="bTheme" title="Yorug / qorong'i rejim">🌗 Avto</button><button id="bPrint" title="Chop etish / PDF">🖨 Chop</button></header>
+<main>
+<h1 class="pt" id="pt">Rubik kubigi</h1>
+<small class="noprint" id="hint"></small>
+<details class="guide" open><summary>Qanday terish: ko'rsatma</summary>
+<h3>1. Kubikni qanday ushlash kerak</h3>
+<div id="hold"></div>
+<p><b>Oq markaz tepada</b>, <b>yashil markaz o'zingizga qaragan</b> (old). Shunda o'ng tomonda qizil, chapda to'q sariq, orqada ko'k, pastda sariq markaz bo'ladi. Yoyilmani ham shu holatda bo'yang: tepa — U, old — F, o'ng — R, chap — L, orqa — B, past — D.</p>
+<h3>2. Yurishlar yozuvi (notatsiya)</h3>
+<p>Har bir harf — bitta yuza. Harf yolg'iz bo'lsa, o'sha yuzani <i>o'sha yuzaga to'g'ridan-to'g'ri qarab</i> soat mili bo'yicha 90° buring.</p>
+<div class="nt" id="nt1"></div>
+<p>Harfdan keyingi belgilar:</p>
+<div class="nt" id="nt2"></div>
+<p>O'rta qatlamlar (3×3 va toq o'lchamli kubiklarda):</p>
+<div class="nt" id="nt3"></div>
+<p><b>Namuna:</b> <code>R U R' U'</code> — o'ng yuzani yuqoriga, tepani chapga, o'ngni pastga, tepani o'ngga buring.</p>
+</details>
+<div class="netwrap"><div class="net" id="net"></div></div>
+<div id="pal" class="row noprint"></div>
+<div class="row noprint"><button id="bFill" aria-pressed="false" title="Bosilgan stikerning butun yuzasini tanlangan rangga bo'yaydi">🪣 Yuzani to'ldirish</button><span id="cnt"><small></small></span></div>
+<div class="row noprint"><button id="bCheck" class="p" disabled>Tekshirish</button><button id="bUndo">Bekor qilish</button><button id="bClear">Tozalash</button><button id="bRand">Aralashtirish (random)</button></div>
+<div class="row noprint"><input id="algIn" placeholder="Formula: R U R' U' 2R Rw M …" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Yurishlar ketma-ketligi"><button id="bAlg">Qo'llash</button></div>
+<div id="msg"></div>
+<div id="solveBox" hidden style="width:100%"><div class="row noprint"><button id="bFast" class="p">Qisqa yo'l (Kociemba)</button><button disabled title="Keyingi bosqich">O'rgatuvchi (keyingi bosqich)</button></div><div id="out"></div></div>
+<details class="guide noprint" id="lib"><summary>Formulalar kutubxonasi</summary><div class="row" style="justify-content:flex-start;margin:6px 0"><button id="fb">formulas.json yuklash</button><input type="file" id="fj" accept=".json,application/json" hidden><small id="fjm"></small></div><div id="libBody"></div></details>
+</main>
+<div id="scan" hidden role="dialog" aria-label="Kamera skaneri">
+<div id="scBox"><video id="scV" playsinline muted autoplay></video><canvas id="scC"></canvas><button id="scClose" aria-label="Yopish">✕</button><div id="scMsg"></div></div>
+<div id="scPanel"><div id="scHint"></div><div id="scProg" class="chips"></div>
+<div class="netwrap" style="width:100%"><div id="scNet" class="net sm"></div></div>
+<div class="row"><button id="scShot" class="p">📸 Olish</button><button id="scUndo">↩ Oxirgisini o'chirish</button><button id="scClear">Tozalash</button></div>
+<div class="row"><button id="scApply" class="p" disabled>✅ Qo'llash va yechish</button></div></div>
+</div>
+<script src="js/cube.js"></script>
+<script src="js/cubie.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/solver.js"></script>
+<script src="js/solver2.js"></script>
+<script src="js/formulas.js"></script>
+<script src="js/net.js"></script>
+<script src="js/player.js"></script>
+<script src="js/scan.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
